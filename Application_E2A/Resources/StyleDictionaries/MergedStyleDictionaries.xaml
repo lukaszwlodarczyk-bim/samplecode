@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Application_E2A.Projects" >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_Colors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_Texts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_Window.xaml"/>
+
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_TreeView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_CheckBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_ComboBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_Expander.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/Style_ScrollBar.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

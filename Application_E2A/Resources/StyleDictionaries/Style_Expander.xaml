@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Application_E2A.Projects" >
+    
+    <Style x:Key="ExpanderPlusMinus" TargetType="ToggleButton">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Width="14" Height="14">
+                        <Rectangle Fill="{DynamicResource primaryBackgroundBrush}" />
+                        <Border Name="ExpandBorder" RenderOptions.EdgeMode="Aliased" BorderBrush="Black" BorderThickness="2">
+                            <Path RenderOptions.EdgeMode="Aliased" Name="ExpandPath" Stroke="Black" Margin="0" StrokeThickness="2" Data="M 5 1 L 5 9 M 1 5 L 9 5" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Data" TargetName="ExpandPath" Value="M 1 5 L 9 5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ExpandBorder" Property="BorderBrush" Value="Gray" />
+                            <Setter TargetName="ExpandPath" Property="Stroke" Value="Gray" />
+                            <Setter Property="Data" TargetName="ExpandPath" Value=""/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

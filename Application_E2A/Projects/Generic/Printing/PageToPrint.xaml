@@ -1,0 +1,182 @@
+﻿<Page
+      x:Class="Application_E2A.Projects.PageToPrint"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Application_E2A.Projects"
+      mc:Ignorable="d" 
+      Height="1122.51968503937" Width="793.700787401575">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/MergedStyleDictionaries.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="72"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="72"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            
+            <!--HEADER-->
+            <Grid x:Name="GridHeader" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <!--E2A LOGO-->
+                <TextBlock x:Name="E2ATop" Grid.Row="0" FontFamily="Open Sans" FontSize="24.6" FontWeight="Bold"
+                               Text="E2A" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <!--HEADER STAMP-->
+                <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="E2A" Style="{StaticResource Paginator_HeaderStampBoldStyle}"/>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{StaticResource Paginator_HeaderStampLightStyle}">
+                        Piet Eckert und Wim Eckert / Architekten ETH BSA SIA AG
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource Paginator_HeaderStampLightStyle}">
+                        Buckhauserstrasse 34 / CH-8048 Zürich
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <!--PROJECT INFO-->
+                <StackPanel Grid.Row="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ProjectNumber}" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text=" / " Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text="{Binding ProjectName}" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding HeaderName}" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text=" / " Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text="{Binding HeaderDate}" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text=" / Seite " Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text="{Binding CurrentPageNumber}" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text="/" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                        <TextBlock Text="{Binding TotalPageNumber}" Style="{StaticResource Paginator_HeaderMainTextStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--COLUMN HEADERS-->
+                <Grid Grid.Row="3">
+                    <ListView ItemsSource="{Binding ColumnHeaders}" BorderThickness="0"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Content}" Width="{Binding MaxContentWidth}" Margin="0 0 10 0"
+                                               Style="{StaticResource Paginator_ContentTextStyle}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+
+            <!--CONTENT-->
+            <Grid x:Name="GridContent" Grid.Row="1">
+                <TreeView x:Name="ContentTreeView" ItemsSource="{Binding Children}" Margin="-22 0 0 0" BorderThickness="0"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource Pagination_TreeViewItemStyle}"/>
+                    </TreeView.ItemContainerStyle>
+
+                    <TreeView.Resources>
+
+                        <HierarchicalDataTemplate DataType="{x:Type local:PrintHeaderViewModel}" ItemsSource="{Binding Children}">
+                            <StackPanel Width="2000">
+                                <TextBlock Text="" Style="{StaticResource Paginator_HeaderContentTextStyle}"/>
+                                <TextBlock Text="{Binding HeaderName}" Style="{StaticResource Paginator_HeaderContentTextStyle}"/>
+                                <Separator BorderThickness="1" Margin="0,-5" Background="LightGray"/>
+                            </StackPanel>
+
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate DataType="{x:Type local:PrintLineViewModel}" >
+                                    <ListView ItemsSource="{Binding Children}" BorderThickness="0" Margin="-21.5 0 0 0">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Content}" Width="{Binding MaxContentWidth}" TextWrapping="Wrap" 
+                                                                   Margin="0 0 10 0" Style="{StaticResource Paginator_ContentTextStyle}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+
+                        </HierarchicalDataTemplate>
+
+                    </TreeView.Resources>
+
+                </TreeView>
+            </Grid>
+
+            <!--FOOTER-->
+            <Grid x:Name="GridFooter" Grid.Row="2">
+                
+                <StackPanel Grid.Row="2" x:Name="Footer" HorizontalAlignment="Left" Margin="0 20 0 0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="E2A " Style="{StaticResource Paginator_HeaderStampBoldStyle}"/>
+                        <TextBlock Style="{StaticResource Paginator_HeaderStampLightStyle}">
+                        / Piet Eckert und Wim Eckert / Architekten ETH BSA SIA AG / Buckhauserstrasse 34 / CH-8048 Zürich
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource Paginator_HeaderStampLightStyle}">
+                        info@e2a.ch / www.e2a.ch / T +41 43 444 40 15
+                    </TextBlock>
+                </StackPanel>
+                
+            </Grid>
+            
+        </Grid>
+    </Grid>
+
+</Page>

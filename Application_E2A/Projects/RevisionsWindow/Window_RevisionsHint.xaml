@@ -1,0 +1,59 @@
+﻿<Window x:Class="Application_E2A.Projects.Window_RevisionsHint"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Application_E2A.Projects"
+             Loaded="Window_Loaded"
+             WindowStyle="None"
+             AllowsTransparency="True"
+             WindowStartupLocation="CenterScreen"
+             MinWidth="{Binding WindowMinimumWidth}"
+             MinHeight="{Binding WindowMinimumHeight}"
+             Title="{Binding Title}" Height="600" Width="700">
+
+    <!--RESOURCES-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Application_E2A;component/Resources/StyleDictionaries/MergedStyleDictionaries.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.Style>
+        <Style TargetType="{x:Type Window}" BasedOn="{StaticResource E2AWindowStyle}"/>
+    </Window.Style>
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="0"
+            GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <TreeView  Grid.Row="1" ItemsSource="{Binding Items}" BorderThickness="0" Margin="40 0 30 0">
+
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource ConnectingLinesTreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <TreeView.Resources>
+                
+                <HierarchicalDataTemplate DataType="{x:Type local:RevisionsSheetGroupViewModel}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding GroupName}"/>
+                </HierarchicalDataTemplate>
+
+                <DataTemplate DataType="{x:Type local:RevisionsHintViewModel}" >
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+
+            </TreeView.Resources>
+        </TreeView>
+
+        
+
+    </Grid>
+</Window>
